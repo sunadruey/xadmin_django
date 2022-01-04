@@ -163,6 +163,7 @@ class AdminSite(object):
         """
         from django.contrib.contenttypes.models import ContentType
 
+
         if not ContentType._meta.installed:
             raise ImproperlyConfigured("Put 'django.contrib.contenttypes' in "
                                        "your INSTALLED_APPS setting in order to use the admin application.")
