@@ -26,7 +26,7 @@ def user_ogin(request):
             login(request, user)
             return render(request, 'index.html')
         else:
-            return render(request, 'index.html', {})
+            return render(request, 'login.html', {"msg": "用户名或密码错误!"})
     elif request.method == "GET":
         return render(request, 'login.html', {})
 
