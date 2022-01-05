@@ -28,7 +28,7 @@ sys.path.insert(1, os.path.join(BASE_DIR, "extra_apps"))
 SECRET_KEY = 'django-insecure-wn9jfcraa9q9=1vxn^gw$k_yq!p^ijjsg=x#h=z+neui1v-6y0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*',]
 
@@ -136,8 +136,16 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, '/static/')]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATICFILES_DIRS = [
+#
+#     os.path.join(STATIC_ROOT, 'css/'),
+#     os.path.join(STATIC_ROOT, 'js/'),
+#     os.path.join(STATIC_ROOT, 'img/'),
+#     os.path.join(STATIC_URL, 'images/'),
+#      ]
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
