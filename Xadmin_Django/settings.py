@@ -19,7 +19,10 @@ sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 sys.path.insert(1, os.path.join(BASE_DIR, "extra_apps"))
 
 # print(sys.path)
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
 
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -136,14 +139,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-# STATICFILES_DIRS = [
-#
-#     os.path.join(STATIC_ROOT, 'css/'),
-#     os.path.join(STATIC_ROOT, 'js/'),
-#     os.path.join(STATIC_ROOT, 'img/'),
-#     os.path.join(STATIC_URL, 'images/'),
-#      ]
+
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
