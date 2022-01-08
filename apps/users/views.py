@@ -1,14 +1,31 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
-from .models import UserProfile
+from .models import UserProfile, EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic.base import View
-from .forms import LoginForm,RegisterForm
-from django.contrib.auth.hashers import  make_password
+from .forms import LoginForm, RegisterForm
+
+from django.contrib.auth.hashers import make_password
+from users.utils.email_send import send_register_email
+
 # Create your views here.
 
+# 判断账号时候激活
+class AciveUserView(View):
+    def get(self, request, active_code):
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
+        if all_records:
+            for record in all_records:
+                email = record.email
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+        else:
+            return render(request, "active_fail.html")
+        return render(request, "login.html")
 
+# 注册账号
 class RegisterView(View):
 
     def get(self, request):
@@ -18,18 +35,26 @@ class RegisterView(View):
     def post(self, request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
-            user_name = request.POST.get('username', '')
+            user_name = request.POST.get('email', '')
             pass_word = request.POST.get('password', '')
-            user_profile =UserProfile()
-            user_profile.username=user_name
-            user_profile.email=user_name
-            user_profile.password=make_password(pass_word)
+            user_profile = UserProfile()
+            user_profile.username = user_name
+            user_profile.email = user_name
+            user_profile.is_active = False
+            user_profile.password = make_password(pass_word)
             user_profile.save()
+#             发送邮箱
+            send_register_email(user_name, 'register')
+            return render(request, 'login.html', {})
+        else:
+            return render(request, 'register.html', {'register_form': register_form})
+
 
 # 类登录方式
 
 
 class LoginView(View):
+
     def get(self, request):
         return render(request, 'login.html', {})
 
@@ -40,8 +65,11 @@ class LoginView(View):
             pass_word = request.POST.get('password', '')
             user = authenticate(username=user_name, password=pass_word)
             if user is not None:
-                login(request, user)
-                return render(request, 'index.html')
+                if user.is_active:
+                    login(request, user)
+                    return render(request, 'index.html')
+                else:
+                    return render(request, 'login.html', {"msg": "账号未激活!"})
             else:
                 return render(request, 'login.html', {"msg": "用户名或密码错误!"})
         else:
