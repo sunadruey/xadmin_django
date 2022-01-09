@@ -4,12 +4,12 @@ from django.contrib.auth.backends import ModelBackend
 from .models import UserProfile, EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic.base import View
-from .forms import LoginForm, RegisterForm, ForgetForm
-
+from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm
 from django.contrib.auth.hashers import make_password
 from users.utils.email_send import send_register_email
 
 # Create your views here.
+
 
 # 判断账号时候激活
 class AciveUserView(View):
@@ -24,6 +24,7 @@ class AciveUserView(View):
         else:
             return render(request, "active_fail.html")
         return render(request, "login.html")
+
 
 # 注册账号
 class RegisterView(View):
@@ -44,6 +45,7 @@ class RegisterView(View):
             user_profile.username = user_name
             user_profile.email = user_name
             user_profile.is_active = False
+            # 明文密码加密
             user_profile.password = make_password(pass_word)
             user_profile.save()
 #             发送邮箱
@@ -54,8 +56,6 @@ class RegisterView(View):
 
 
 # 类登录方式
-
-
 class LoginView(View):
 
     def get(self, request):
@@ -105,7 +105,7 @@ def user_login(request):
     elif request.method == "GET":
         return render(request, 'login.html', {})
 
-
+# 忘记密码
 class ForgetPwdView(View):
     def get(self, request):
         forget_form = ForgetForm()
@@ -119,3 +119,36 @@ class ForgetPwdView(View):
             return render(request, "send_success.html")
         else:
             return render(request, "forgetpwd.html", {"forget_form": forget_form})
+
+# 重置密码
+class ResetView(View):
+    def get(self, request, active_code):
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
+        if all_records:
+            for record in all_records:
+                email = record.email
+                return render(request, "password_reset.html", {"email": email})
+
+        else:
+            return render(request, "active_fail.html")
+        return render(request, "login.html")
+
+# """
+#     修改用户密码
+#     """
+class ModifyPwdView(View):
+    def post(self, request):
+        modify_form = ModifyPwdForm(request.POST)
+        if modify_form.is_valid():
+            pwd1 = request.POST.get("password_old", "")
+            pwd2 = request.POST.get("password_new", "")
+            email = request.POST.get("email", "")
+            if pwd1 != pwd2:
+                return render(request, "password_reset.html", {"email": email, "msg": "密码不一致"})
+            user = UserProfile.objects.get(email=email)
+            user.password = make_password(pwd2)
+            user.save()
+            return render(request, "login.html")
+        else:
+            email = request.POST.get("email", "")
+            return render(request, "password_reset.html", {"email": email, "modify_form": modify_form})

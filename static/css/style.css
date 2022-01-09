@@ -1373,7 +1373,7 @@ textarea:focus {
 /*header nav*/
 .header .nav {
     background: #717171;
-    height: 38px;
+    height: 45px;
     font-size: 14px;
     width: 100%;
 }
@@ -1388,7 +1388,7 @@ textarea:focus {
     color: #fff;
     display: block;
     width: 100%;
-    height: 38px;
+    height: 45px;
     line-height: 38px;
     text-align: center;
     position: relative;

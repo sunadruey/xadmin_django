@@ -23,3 +23,11 @@ class RegisterForm(forms.Form):
 class ForgetForm(forms.Form):
     email = forms.EmailField(required=True)
     captcha = CaptchaField(error_messages={"invalid": u"验证码错误"})
+
+
+class ModifyPwdForm(forms.Form):
+    # 变量值和html中的变量值名称保持一致
+    password_old = forms.EmailField(required=True,min_length=5)
+    password_new = forms.CharField(required=True, min_length=5)
+
+
