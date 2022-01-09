@@ -20,7 +20,8 @@ import xadmin
 # from users.views import user_login
 from users.views import LoginView, RegisterView, AciveUserView, ForgetPwdView, ResetView,ModifyPwdView
 from organization.views import OrgView
-
+from  django.views.static import serve
+from Xadmin_Django.settings import MEDIA_ROOT
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -39,5 +40,7 @@ urlpatterns = [
 
    #课程机构首页
     path('org_list/', OrgView.as_view(), name='org_list'),
+    # 配置上传文件的访问处理函数
+    re_path('media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
 
 ]
