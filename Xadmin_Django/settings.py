@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "organization",
     "operation",
     "captcha",
+    "pure_pagination",
+    "django.template.context_processors.media",
 
 ]
 AUTH_USER_MODEL = "users.UserProfile"
@@ -82,7 +84,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # 'django.core.context_processors.media',
-                'django.template.context_processors.media',
 
             ],
         },
