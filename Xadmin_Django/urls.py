@@ -37,9 +37,9 @@ urlpatterns = [
     path('forget/', ForgetPwdView.as_view(), name='forget_pwd'),
     path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
 
+    # 课程机构url配置
+    path('org/', include('organization.urls', namespace='org')),
 
-     #课程机构首页
-    path('org_list/', OrgView.as_view(), name='org_list'),
     # 配置上传文件的访问处理函数
     re_path('media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
 
