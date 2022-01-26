@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from .models import CourseOrg, CityDict
-from django.shortcuts import render_to_response
+# from django.shortcuts import render_to_response
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
@@ -24,8 +24,6 @@ class OrgView(View):
             all_orgs = all_orgs.filter(category=category)
 
         org_nums = all_orgs.count()
-
-
 
         # 对课程进行分页
         try:

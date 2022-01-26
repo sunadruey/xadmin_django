@@ -45,16 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.sites',
     'xadmin',
     'crispy_forms',
     'reversion',
-    "users",
+    'users',
     "courses",
     "organization",
     "operation",
     "captcha",
     "pure_pagination",
-    "django.template.context_processors.media",
+
 
 ]
 AUTH_USER_MODEL = "users.UserProfile"
@@ -83,7 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'django.core.context_processors.media',
+                "django.template.context_processors.media",
 
             ],
         },

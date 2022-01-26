@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 import xadmin
-# from users.views import user_login
+from users.views import user_login
 from users.views import LoginView, RegisterView, AciveUserView, ForgetPwdView, ResetView,ModifyPwdView
 from organization.views import OrgView
 from django.views.static import serve
