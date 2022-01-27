@@ -14,5 +14,5 @@ class UseAskForm(forms.ModelForm):
     # my_field =forms.CharField()
     # 指定字段
     class Meta:
-        model= UserAsk
-        fields=['name', 'mobile', 'course_name']
+        model = UserAsk
+        fields = ['name', 'mobile', 'course_name']

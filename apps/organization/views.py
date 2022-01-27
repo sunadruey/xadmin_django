@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from .models import CourseOrg, CityDict
 # from django.shortcuts import render_to_response
-from  django.http import HttpResponse
+from django.http import HttpResponse
 from .forms import UseAskForm
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
@@ -53,7 +53,7 @@ class OrgView(View):
             "city_id": city_id,
             "category":category,
             "hot_orgs":hot_orgs,
-            "sort":sort
+            "sort": sort
         })
 
 
@@ -61,13 +61,13 @@ class AddUserAskView(View):
     """
     用户添加咨询
     """
-    def post(self,request):
-        userask_form =UseAskForm(request.POST)
+    def post(self, request):
+        userask_form = UseAskForm(request.POST)
         if userask_form.is_valid():
             user_ask = userask_form.save(commit=True)
-            return HttpResponse("{'status':'success'}",content_type='application/json')
+            return HttpResponse('{"status":"success"}', content_type='application/json')
         else:
-            return HttpResponse("{'status':'fail','msg':'添加出错'}",content_type='application/json')
+            return HttpResponse('{"status":"fail","msg":"添加出错"}', content_type='application/json')
 #     异步的操作ajax操作 返回的json
 
 

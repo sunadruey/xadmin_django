@@ -169,8 +169,8 @@
                     data: $('#jsStayForm').serialize(),
                     async: true,
                     success: function (data) {
-                        console.log(data)
-                        alert(data)
+                        var str = JSON.stringify(data);
+                        console.log(str)
                         if (data.status == 'success') {
                             $('#jsStayForm')[0].reset();
                             alert("提交成功")
@@ -181,6 +181,5 @@
             });
         });
     })
-
 </script>
 {%  endblock %}
