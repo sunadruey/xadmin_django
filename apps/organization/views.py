@@ -5,6 +5,7 @@ from .models import CourseOrg, CityDict
 from django.http import HttpResponse
 from .forms import UseAskForm
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+from courses.models import Course
 # Create your views here.
 
 class OrgView(View):
@@ -69,6 +70,22 @@ class AddUserAskView(View):
         else:
             return HttpResponse('{"status":"fail","msg":"添加出错"}', content_type='application/json')
 #     异步的操作ajax操作 返回的json
+
+
+class OrgHomeView(View):
+    """
+    机构首页
+    """
+    def get(self, request, org_id):
+        course_org = CourseOrg.objects.get(id=int(org_id))
+#         取出机构所有的courses
+        all_courses = course_org.curse_set.all()[:3]
+        all_teachers =course_org.teacher_set.all()[:1]
+        return render(request, 'org-detail-homepage.html', {
+            'all_courses': all_courses,
+            'all_teachers': all_teachers,
+            'course_org' : course_org
+        })
 
 
 
