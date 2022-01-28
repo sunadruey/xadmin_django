@@ -2,6 +2,8 @@ from datetime import datetime
 
 from django.db import models
 from organization.models import CourseOrg
+# from DjangoUeditor.models import UEditorField
+
 
 # Create your models here.
 

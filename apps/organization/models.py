@@ -25,7 +25,7 @@ class CourseOrg(models.Model):
    category = models.CharField(max_length=20, verbose_name=u"培训机构", default="pxjg", choices=(("pxjg", "培训机构"), ("gr", "个人"), ("gx", "高校")))
    click_num = models.IntegerField(default=0, verbose_name=u'点击数')
    fav_nums = models.IntegerField(default=0, verbose_name=u'收藏人数')
-   image = models.ImageField(upload_to="org/%Y/%m", verbose_name=u'封面图', max_length=100)
+   image = models.ImageField(upload_to="org/%Y/%m", verbose_name=u'封面图', max_length=100, blank=True, null=True)
    address = models.CharField(max_length=150, verbose_name=u"机构地址")
    city = models.ForeignKey(CityDict, on_delete=models.CASCADE, verbose_name=u'所在城市')
    students = models.IntegerField(default=0, verbose_name=u'学习人数')
@@ -43,6 +43,7 @@ class CourseOrg(models.Model):
 class Teacher(models.Model):
     org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name=u'所属机构')
     name = models.CharField(max_length=50, verbose_name=u'教师名')
+    image = models.ImageField(upload_to="teacher/%Y/%m", verbose_name=u'封面图', max_length=100)
     work_years = models.IntegerField(default=0, verbose_name=u"工作年限")
     work_company = models.CharField(max_length=50, verbose_name=u'就职公司')
     work_position = models.CharField(max_length=50, verbose_name=u'公司职位')

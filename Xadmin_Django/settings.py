@@ -106,6 +106,11 @@ DATABASES = {
         'USER': "root",  # 用户名
         'PASSWORD': "123456",  # 密码
         'NAME': "mxonline",  # 数据库名
+        'OPTIONS': {
+
+            "init_command": "SET foreign_key_checks = 0;",
+
+        }
     }
 }
 
