@@ -50,7 +50,6 @@
 					<li class="{% ifequal sort 'courses'%}active2{% endifequal %}"><a href="?sort=courses&ct={{ category }}&city={{ city.id }}">课程数 &#8595;</a></li>
 				</ul>
 			</div>
-
             {%  for course_org in all_orgs.object_list %}
                           <dl class="des difdes">
                     <dt>
@@ -64,11 +63,9 @@
                              <a href="{% url 'org:org_home' course_org.id %}">
                                  <h1>{{course_org.name}}</h1>
                                  <div class="pic fl">
-
                                          <img src="{% static '/images/authentication.png' %}"/>
 
                                          <img src= "{% static 'images/authentication.png' %}"/>
-
                                  </div>
                              </a>
                         </div>
@@ -80,7 +77,6 @@
                                     <a href="/diary/19/">c语言基础入门</a>
 
                                     <a href="/diary/16/">数据库基础</a>
-
                             </li>
                         </ul>
                     </dd>
