@@ -116,4 +116,40 @@ class OrgCourseView(View):
 
 
 
+class OrgDescView(View):
+    """
+    机构介绍页
+    """
+    def get(self, request, org_id):
+        # course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        current_page ='desc'
+#         取出机构所有的courses
+#         all_orgs.filter(city_id=int(city_id))
+#         all_courses = Course.objects.filter(course_org=course_org)[:4]
+#         外键直接取出数据Course模块名小写，加_set,
+        all_courses = course_org.course_set.all()
+        return render(request, 'org-detail-desc.html', {
 
+            'course_org': course_org,
+            'current_page': current_page,
+        })
+
+class OrgTeacherView(View):
+    """
+    机构教师页
+    """
+    def get(self, request, org_id):
+        # course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        current_page ='teacher'
+#         取出机构所有的courses
+#         all_orgs.filter(city_id=int(city_id))
+#         all_courses = Course.objects.filter(course_org=course_org)[:4]
+#         外键直接取出数据Course模块名小写，加_set,
+        all_teachers = course_org.teacher_set.all()
+        return render(request, 'org-detail-teachers.html', {
+            'all_teachers': all_teachers,
+            'course_org': course_org,
+            'current_page': current_page,
+        })
