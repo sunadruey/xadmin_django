@@ -39,8 +39,11 @@ urlpatterns = [
 
     # 课程机构url配置
     path('org/', include('organization.urls', namespace='org')),
+
+
+
     # 课程app相关url配置
-    # path("course/", include('course.urls', namespace="course")),
+    path("course/", include('courses.urls', namespace="course")),
 
 
     # 配置上传文件的访问处理函数
