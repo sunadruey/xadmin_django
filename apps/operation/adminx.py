@@ -3,7 +3,7 @@
 # @Author : zhaoshuangmei
 # @File : adminx
 import xadmin
-from .models import UserAsk, CourseComments, UserFavorite, UserMessage
+from .models import UserAsk, CourseComments, UserFavorite, UserMessage,UserCourse
 
 
 class UserAskAdmin(object):
@@ -32,7 +32,15 @@ class UserMessageAdmin(object):
     list_filter = ['user', 'message',  'has_read', 'add_time']
 
 
+class CourseCourseAdmin(object):
+
+    list_display = ['user', 'course', 'add_time']
+    search_fields = ['user', 'course', 'add_time']
+    list_filter = ['user', 'course', 'add_time']
+
+
 xadmin.site.register(UserAsk, UserAskAdmin)
 xadmin.site.register(CourseComments, CourseCommentsAdmin)
 xadmin.site.register(UserFavorite, UserFavoriteAdmin)
 xadmin.site.register(UserMessage, UserMessageAdmin)
+xadmin.site.register(UserCourse, CourseCourseAdmin)

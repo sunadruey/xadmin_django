@@ -40,6 +40,11 @@ class CourseOrg(models.Model):
        return self.name
 
 
+   def get_teacher_nums(self):
+       # 获取课程机构的教室数量
+       return self.teacher_set.all().count()
+
+
 class Teacher(models.Model):
     org = models.ForeignKey(CourseOrg, on_delete=models.CASCADE, verbose_name=u'所属机构')
     name = models.CharField(max_length=50, verbose_name=u'教师名')

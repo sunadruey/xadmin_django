@@ -33,8 +33,11 @@ class CourseResourseAdmin(object):
     search_fields = ['course', 'name']
     list_filter = ['course', 'name', 'add_time']
 
+
+
 xadmin.site.register(Course, CourseAdmin)
 xadmin.site.register(Lesson, LessonAdmin)
 xadmin.site.register(Video, VideoAdmin)
 xadmin.site.register(CourseResourse, CourseResourseAdmin)
+
 
