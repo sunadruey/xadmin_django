@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from django.views.generic.base import View
 from django.shortcuts import render
 
-from operation.models import UserFavorite,CourseComments
+from operation.models import UserFavorite,CourseComments,UserCourse
 from .models import Course,CourseResourse
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+from utils.mixin_utils import LoginRequiredMixin
 
 class CourseListView(View):
 
@@ -75,19 +76,33 @@ class CourseDetailView(View):
         })
 
 
-class CourseInfoView(View):
+class CourseInfoView(LoginRequiredMixin,View):
 
     def get(self, request,course_id):
         course = Course.objects.get(id=int(course_id))
+        # 查询用户是否已经关联该课程
+        user_courses =UserCourse.objects.filter(user=request.user, course=course)
+        if not user_courses:
+            user_course = UserCourse(user=request.user, course=course)
+            user_course.save()
+        user_cousers =UserCourse.objects.filter(course=course)
+
+        user_ids = [ user_couser.user.id for user_couser in user_cousers]
+        all_user_courses = UserCourse.objects.filter(user_id__in=user_ids)
+        # 取出所有课程id
+        course_ids = [user_couser.course.id for user_couser in all_user_courses]
+        relate_courses= Course.objects.filter(id__in=course_ids).order_by("-click_num")
+        # 学过该课程的用户学过的其他课程
         all_resources= CourseResourse.objects.filter(course=course)
         return render(request, 'course-video.html', {
         "course": course,
-        "course_resources":all_resources
+        "course_resources": all_resources,
+        "relate_courses": relate_courses
 
     })
 
 
-class CommentsView(View):
+class CommentsView(LoginRequiredMixin,View):
 
     def get(self, request,course_id):
         course = Course.objects.get(id=int(course_id))
