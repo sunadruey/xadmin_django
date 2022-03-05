@@ -5,7 +5,7 @@ from django.views.generic.base import View
 from django.shortcuts import render
 
 from operation.models import UserFavorite,CourseComments,UserCourse
-from .models import Course,CourseResourse
+from .models import Course,CourseResourse,Video
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -48,6 +48,8 @@ class CourseDetailView(View):
 
     def get(self, request,course_id):
         course= Course.objects.get(id=int(course_id))
+        # course = video.lesson.course
+
         # 增加课程点击数
         course.click_num+=1
         course.save()
@@ -71,7 +73,8 @@ class CourseDetailView(View):
             "course": course,
             "relate_courses": relate_courses,
             "has_fav_course": has_fav_course,
-            "has_fav_org": has_fav_org
+            "has_fav_org": has_fav_org,
+
 
         })
 
@@ -144,9 +147,38 @@ class AddCommentsView(View):
 
 
 
+class VideoPlayView(View):
+    '''
+    视频播放页面
+    '''
+    def get(self, request, video_id):
+        video = Video.objects.get(id=int(video_id))
+        course = video.lesson.course
+        # 增加课程点击数
+        course.click_num += 1
+        course.save()
 
+        has_fav_course = False
+        has_fav_org = False
+        # 判断用户是否登录
+        if request.user.is_authenticated:
+            # 判断用户是否登录
+            if UserFavorite.objects.filter(user=request.user, fav_id=course.id, fav_type=1):
+                has_fav_course = True
+            if UserFavorite.objects.filter(user=request.user, fav_id=course.course_org.id, fav_type=2):
+                has_fav_org = True
+        tag = course.tag
+        if tag:
+            relate_courses = Course.objects.filter(tag=tag)[:1]
+        else:
+            relate_courses = []
 
+        return render(request, 'course-play.html', {
+            "course": course,
+            "relate_courses": relate_courses,
+            "has_fav_course": has_fav_course,
+            "has_fav_org": has_fav_org,
+            "video": video
 
-
-
+        })
 
