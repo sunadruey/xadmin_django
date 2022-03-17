@@ -45,6 +45,9 @@ urlpatterns = [
     # 课程app相关url配置
     path("course/", include('courses.urls', namespace="course")),
 
+   # # 讲师app相关url配置
+   #  path("teacher/", include('teacher.urls', namespace="teacher")),
+
 
     # 配置上传文件的访问处理函数
     re_path('media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
