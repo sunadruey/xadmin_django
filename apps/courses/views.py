@@ -1,4 +1,5 @@
 from django.core.paginator import PageNotAnInteger
+from django.db.models import Q
 from django.http import HttpResponse
 
 from django.views.generic.base import View
@@ -14,6 +15,12 @@ class CourseListView(View):
     def get(self, request):
         all_courses = Course.objects.all().order_by("-add_time")
         hot_courses = Course.objects.all().order_by("-click_num")[:3]
+
+        # 课程搜索
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            # i不区分大小写 类似mysql like语句
+            all_courses = all_courses.filter(Q(name__icontains=search_keywords)|Q(desc__icontains=search_keywords))
 
         # 课程排序
         sort = request.GET.get('sort', "")

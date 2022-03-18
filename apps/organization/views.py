@@ -3,6 +3,7 @@ from django.views.generic import View
 
 from operation.models import UserFavorite
 from .models import CourseOrg, CityDict,Teacher
+from django.db.models import Q
 # from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from .forms import UseAskForm
@@ -18,9 +19,15 @@ class OrgView(View):
         all_orgs = CourseOrg.objects.all()
         hot_orgs = all_orgs.order_by("-click_num")[:3]
         # 直接统计modeL实例的数量
-        org_nums = all_orgs.count()
+        # org_nums = all_orgs.count()
         # 城市
         all_citys = CityDict.objects.all()
+
+        # 机构搜索
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            # i不区分大小写 类似mysql like语句
+            all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))
 
         # 取出筛选城市
         city_id = request.GET.get('city', "")
@@ -215,7 +222,18 @@ class TeacherListView(View):
     """
     def get(self,request):
         all_teachers = Teacher.objects.all()
+
+        current_nav ='teacher'
+        # 教师搜索
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            # i不区分大小写 类似mysql like语句
+            all_teachers = all_teachers.filter(
+                Q(name__icontains=search_keywords) | Q(work_company__icontains=search_keywords) | Q(
+                    work_position__icontains=search_keywords))
+
         sort = request.GET.get('sort', "")
+
         if sort:
             if sort == "hot":
                 all_teachers = all_teachers.order_by("-click_num")
@@ -234,7 +252,8 @@ class TeacherListView(View):
         return render(request, 'teachers-list.html', {
             'all_teachers': teachers,
             'sorted_teacher':sorted_teacher,
-            'sort':sort,
+            'sort': sort,
+            'current_nav': current_nav
 
         })
 
