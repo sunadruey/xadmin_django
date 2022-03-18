@@ -45,6 +45,9 @@ urlpatterns = [
     # 课程app相关url配置
     path("course/", include('courses.urls', namespace="course")),
 
+    # 用户相关的配置
+    path("users/", include('users.urls', namespace="users")),
+
    # # 讲师app相关url配置
    #  path("teacher/", include('teacher.urls', namespace="teacher")),
 

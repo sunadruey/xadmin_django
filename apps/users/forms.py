@@ -6,6 +6,8 @@
 from django import forms
 from captcha.fields import CaptchaField
 
+from .models import UserProfile
+
 
 class LoginForm(forms.Form):
     # 变量值和html中的变量值名称保持一致
@@ -31,3 +33,8 @@ class ModifyPwdForm(forms.Form):
     password_new = forms.CharField(required=True, min_length=5)
 
 
+
+class UploadImageForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['image']
