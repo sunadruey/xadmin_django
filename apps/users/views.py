@@ -1,4 +1,3 @@
-from django.core.paginator import PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
@@ -14,6 +13,7 @@ from django.http import HttpResponse
 from operation.models import UserCourse ,UserFavorite,UserMessage
 from organization.models import CourseOrg,Teacher
 from courses.models import Course
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -333,18 +333,18 @@ class MymessageView(LoginRequiredMixin,View):
 
     def get(self,request):
 
-        all_message =UserMessage.objects.filter(user=request.user.id)
+        all_messages =UserMessage.objects.filter(user=request.user.id)
         # 对我的消息分页,无数据报错
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
             page = 1
         # 这个地方可以换成查询数据库的记录。
-        p = Paginator(all_message, 1, request=request)
+        p = Paginator(all_messages, 1, request=request)
         # 这里的数字5是每页显示的记录条数，官方例子没加这个参数，但是不加会报错。
         messages = p.page(page)
         return render(request,'usercenter-message.html',{
-            "messages": messages ,
+            "messages": messages,
         })
 
 
