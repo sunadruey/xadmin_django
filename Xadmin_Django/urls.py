@@ -30,7 +30,9 @@ urlpatterns = [
     # path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
     # path('login/', user_login, name='login')
     path('login/', LoginView.as_view(), name='login'),
+
     path('register/', RegisterView.as_view(), name='register'),
+
     path('captcha/', include('captcha.urls')),
     re_path('active/(?P<active_code>.*)/$', AciveUserView.as_view(), name='user_active'),
     re_path('reset/(?P<active_code>.*)/$', ResetView.as_view(), name='reset_pwd'),

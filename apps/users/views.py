@@ -1,3 +1,4 @@
+from django.core.paginator import PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
@@ -10,9 +11,10 @@ from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm,UploadImag
 from django.contrib.auth.hashers import make_password
 from users.utils.email_send import send_register_email
 from django.http import HttpResponse
-from operation.models import UserCourse ,UserFavorite
+from operation.models import UserCourse ,UserFavorite,UserMessage
 from organization.models import CourseOrg,Teacher
 from courses.models import Course
+
 # Create your views here.
 
 
@@ -53,6 +55,12 @@ class RegisterView(View):
             # 明文密码加密
             user_profile.password = make_password(pass_word)
             user_profile.save()
+#             写入欢迎注册消息
+            user_message =UserMessage()
+            user_message.user = user_profile.id
+            user_message.message = "欢迎注册慕学在线网"
+            user_message.save()
+
 #             发送邮箱
             send_register_email(user_name, 'register')
             return render(request, 'login.html', {})
@@ -171,8 +179,6 @@ class UserInfoView(LoginRequiredMixin,View):
         if user_info_form.is_valid():
             user_info_form.save()
             return HttpResponse('{"status":"success"}', content_type='application/json')
-
-
         else:
             return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
 
@@ -320,5 +326,25 @@ class MyFavCourseView(LoginRequiredMixin,View):
             'course_list':course_list,
         })
 
+class MymessageView(LoginRequiredMixin,View):
+    '''
+    我的消息
+    '''
+
+    def get(self,request):
+
+        all_message =UserMessage.objects.filter(user=request.user.id)
+        # 对我的消息分页,无数据报错
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        # 这个地方可以换成查询数据库的记录。
+        p = Paginator(all_message, 1, request=request)
+        # 这里的数字5是每页显示的记录条数，官方例子没加这个参数，但是不加会报错。
+        messages = p.page(page)
+        return render(request,'usercenter-message.html',{
+            "messages": messages ,
+        })
 
 
