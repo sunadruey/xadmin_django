@@ -49,7 +49,8 @@
                             <i class="error-tips"></i>
 						</li>
 						<li>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
-							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  name="gender" value="male" checked="{% ifequal request.user.gender 'male' %}checked{% endifequal %}">男</label>
+							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio"  name="gender" value="male" checked="{% ifequal request.user.gender 'male' %}checked{% ifequal %}">男</label>
+<!--							<label>    <input type="radio"  name="gender" value="male" {% if request.user.gender == "male" %} checked="checked" {% endif %} >男</label>-->
 							<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender" value="female"  checked="{% ifequal request.user.gender 'female' %}checked{% endifequal %}">女</label>
 						</li>
 						<li class="p_infor_city">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：
