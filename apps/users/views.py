@@ -10,8 +10,9 @@ from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm,UploadImag
 from django.contrib.auth.hashers import make_password
 from users.utils.email_send import send_register_email
 from django.http import HttpResponse
-from operation.models import UserCourse
-
+from operation.models import UserCourse ,UserFavorite
+from organization.models import CourseOrg,Teacher
+from courses.models import Course
 # Create your views here.
 
 
@@ -261,10 +262,63 @@ class MyCourseView(LoginRequiredMixin,View):
             'user_courses':user_courses
         })
 
+class MyFavOrgView(LoginRequiredMixin,View):
+    '''
+    我收藏的课程机构
+    '''
+
+    def get(self,request):
+        org_list=[]
+        fav_orgs =UserFavorite.objects.filter(user=request.user,fav_type=2)
+        for fav_org in fav_orgs:
+            org_id = fav_org.fav_id
+            org = CourseOrg.objects.get(id=org_id)
+            org_list.append(org)
+
+        return render(request,'usercenter-fav-org.html',{
+            'org_list':org_list,
+        })
+
+
+
+class MyFavTeacherView(LoginRequiredMixin,View):
+    '''
+    我收藏的授课讲师
+    '''
+
+    def get(self,request):
+        teacher_list=[]
+        fav_teachers =UserFavorite.objects.filter(user=request.user,fav_type=3)
+
+        for fav_teacher in fav_teachers:
+            teacher_id = fav_teacher.fav_id
+            teacher = Teacher.objects.get(id=teacher_id)
+            teacher_list.append(teacher)
+
+        return render(request,'usercenter-fav-teacher.html',{
+            'teacher_list':teacher_list,
+        })
 
 
 
 
+class MyFavCourseView(LoginRequiredMixin,View):
+    '''
+    我收藏的授课讲师
+    '''
+
+    def get(self,request):
+        course_list=[]
+        fav_courses =UserFavorite.objects.filter(user=request.user,fav_type=1)
+
+        for fav_course in fav_courses:
+            course_id = fav_course.fav_id
+            course = Course.objects.get(id=course_id)
+            course_list.append(course)
+
+        return render(request,'usercenter-fav-course.html',{
+            'course_list':course_list,
+        })
 
 
 
