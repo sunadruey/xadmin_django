@@ -89,7 +89,8 @@ class OrgHomeView(View):
         current_page = 'home'
         # course_org = CourseOrg.objects.get(id=int(org_id))
         course_org = CourseOrg.objects.get(id=int(org_id))
-
+        course_org.click_num+=1
+        course_org.save()
         has_fav=False
         if request.user.is_authenticated:
             if UserFavorite.objects.filter(user=request.user,fav_id=course_org.id,fav_type=2):
@@ -167,6 +168,7 @@ class OrgTeacherView(View):
     def get(self, request, org_id):
         # course_org = CourseOrg.objects.get(id=int(org_id))
         course_org = CourseOrg.objects.get(id=int(org_id))
+
         current_page ='teacher'
         has_fav = False
         if request.user.is_authenticated:
@@ -257,19 +259,14 @@ class TeacherListView(View):
 
         })
 
-
-
-
-
-
-
-
-
 class TeacherDetailView(View):
 
     def get(self, request, teacher_id):
 
         teacher =Teacher.objects.get(id=int(teacher_id))
+        teacher.click_num+=1
+        teacher.save()
+
         all_courses = Course.objects.filter(theacher=teacher)
         has_teacher_faved = False
 
