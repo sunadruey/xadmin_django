@@ -17,7 +17,9 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 import xadmin
-from users.views import user_login
+# from users.views import user_login,IndexView
+from users.views import IndexView
+
 from users.views import LoginView, RegisterView, AciveUserView, ForgetPwdView, ResetView,ModifyPwdView,LogoutView
 from organization.views import OrgView
 from django.views.static import serve
@@ -26,7 +28,8 @@ from Xadmin_Django.settings import MEDIA_ROOT
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    # path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('', IndexView.as_view(), name='index'),
     # path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
     # path('login/', user_login, name='login')
     path('login/', LoginView.as_view(), name='login'),

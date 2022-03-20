@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.backends import ModelBackend
 import json
 from utils.mixin_utils import LoginRequiredMixin
-from .models import UserProfile, EmailVerifyRecord
+from .models import UserProfile, EmailVerifyRecord,Banner
 from django.db.models import Q
 from django.views.generic.base import View
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm,UploadImageForm,UserInfoForm
@@ -365,4 +365,22 @@ class MymessageView(LoginRequiredMixin,View):
             "messages": messages,
         })
 
+
+class IndexView(View):
+    # 慕学在线网 首页
+    def get(self,request):
+         # 取出轮播图
+
+         all_banners = Banner.objects.all().order_by('index')[:5]
+         courses =Course.objects.filter(is_banner=False)[:6]
+         banner_courses =Course.objects.filter(is_banner=False)[:3]
+         course_orgs =CourseOrg.objects.all()[:15]
+
+         return render(request, 'index.html',{
+             "all_banners": all_banners,
+             "courses": courses,
+             "course_orgs": course_orgs,
+             "banner_courses": banner_courses
+
+         })
 
