@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.backends import ModelBackend
 import json
 from utils.mixin_utils import LoginRequiredMixin
@@ -9,8 +9,8 @@ from django.views.generic.base import View
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm,UploadImageForm,UserInfoForm
 from django.contrib.auth.hashers import make_password
 from users.utils.email_send import send_register_email
-from django.http import HttpResponse
-from operation.models import UserCourse ,UserFavorite,UserMessage
+from django.http import HttpResponse,HttpResponseRedirect
+from operation.models import UserCourse,UserFavorite,UserMessage
 from organization.models import CourseOrg,Teacher
 from courses.models import Course
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
@@ -102,6 +102,18 @@ class CustomBackend(ModelBackend):
                 return user
         except Exception as e:
             return None
+
+
+class LogoutView(View):
+    def get(self,request):
+        '''
+
+        用户登出
+        '''
+        logout(request)
+#         重定向到另一个页面
+        from django.urls import reverse
+        return HttpResponseRedirect(reverse("index"))
 
 
 # 账号登录
