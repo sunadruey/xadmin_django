@@ -83,7 +83,11 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'index.html')
+                    # 退出登录之后，重新登录数据为空
+                    # return render(request, 'index.html')
+                #    解决办法
+                    from django.urls import reverse
+                    return HttpResponseRedirect(reverse("index"))
                 else:
                     return render(request, 'login.html', {"msg": "账号未激活!"})
             else:
