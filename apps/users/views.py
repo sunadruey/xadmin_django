@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.backends import ModelBackend
 import json
@@ -388,3 +388,15 @@ class IndexView(View):
 
          })
 
+
+def page_not_found(request,exception=404):
+    # 全局404处理函数
+    from django.shortcuts import render_to_response
+    response = render(request, "404.html" )
+    return response
+
+def page_error(request,exception=500):
+    # 全局404处理函数
+    from django.shortcuts import render_to_response
+    response = render(request, "500.html")
+    return response

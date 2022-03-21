@@ -31,9 +31,9 @@ AUTHENTICATION_BACKENDS = (
 SECRET_KEY = 'django-insecure-wn9jfcraa9q9=1vxn^gw$k_yq!p^ijjsg=x#h=z+neui1v-6y0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -152,7 +152,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = '/static/'
+
 
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
@@ -172,3 +172,6 @@ EMAIL_FROM = "sunadruey@163.com"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 配置static访问路径
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '/static')

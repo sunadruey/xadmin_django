@@ -23,7 +23,7 @@ from users.views import IndexView
 from users.views import LoginView, RegisterView, AciveUserView, ForgetPwdView, ResetView,ModifyPwdView,LogoutView
 from organization.views import OrgView
 from django.views.static import serve
-from Xadmin_Django.settings import MEDIA_ROOT
+from Xadmin_Django.settings import MEDIA_ROOT,STATIC_ROOT
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -61,6 +61,11 @@ urlpatterns = [
 
     # 配置上传文件的访问处理函数
     re_path('media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
+    # DEBUG = False时不会访问静态数据，需要手动添加
+    re_path('static/(?P<path>.*)/$', serve, {"document_root": STATIC_ROOT}),
 
 
 ]
+# 全局404页面配置
+handler404 = 'users.views.page_not_found'
+handler500 = 'users.views.page_error'
