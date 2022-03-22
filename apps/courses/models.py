@@ -15,7 +15,7 @@ class Course(models.Model):
     youneed_know = models.CharField(max_length=300,default="", blank=True, null=True, verbose_name=u"课程须知")
     teacher_tell= models.CharField(max_length=300, default="", blank=True, null=True, verbose_name=u"教师告知")
     detail = models.TextField(verbose_name=u'课程详情')
-    is_banner = models.BooleanField(default=False,verbose_name=u'是否轮播图')
+    is_banner = models.BooleanField(default=False, verbose_name=u'是否轮播图')
     degree = models.CharField(choices=(('cj', '初级'), ('zj', "中级"), ('gj', '高级')), verbose_name=u'难度', max_length=2)
     theacher = models.ForeignKey(Teacher,on_delete=models.CASCADE, verbose_name=u'讲师', blank=True, null=True)
     learn_time = models.IntegerField(default=0, verbose_name=u'学习时长(分钟数)')

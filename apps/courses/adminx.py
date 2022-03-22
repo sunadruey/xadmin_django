@@ -29,6 +29,11 @@ class CourseAdmin(object):
     exclude = ['fav_nums']
     inlines = [LessonInline, CourseResourceInline]
 
+    def queryset(self):
+        qs = super(CourseAdmin, self).queryset()
+        qs = qs.filter(is_banner=False)
+        return qs
+
 
 class BannerCourseAdmin(object):
     list_display = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time']
@@ -41,6 +46,11 @@ class BannerCourseAdmin(object):
     # 默认隐藏字段和readonly_fields冲突 字段不能一样
     exclude = ['fav_nums']
     inlines = [LessonInline, CourseResourceInline]
+
+    def queryset(self):
+        qs = super(BannerCourseAdmin, self).queryset()
+        qs = qs.filter(is_banner=True)
+        return qs
 
 class LessonAdmin(object):
     list_display = ['course', 'name', 'add_time']
