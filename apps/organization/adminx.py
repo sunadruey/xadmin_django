@@ -19,6 +19,8 @@ class CourseOrgAdmin(object):
     list_display = ['name', 'desc',  'fav_nums', 'click_num', 'city', 'address', 'add_time']
     search_fields = ['name', 'desc',  'fav_nums', 'click_num', 'city', 'address']
     list_filter =['name', 'desc',  'fav_nums', 'click_num', 'city', 'address', 'add_time']
+#     设置课程机构可搜索
+    relfield_style ='fk_ajax'
 
 
 class TeacherAdmin(object):
