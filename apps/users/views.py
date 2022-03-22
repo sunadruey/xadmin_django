@@ -388,6 +388,27 @@ class IndexView(View):
 
          })
 
+class LoginUnsafeView(View):
+    def get(self, request):
+        return render(request, 'login.html', {})
+
+    def post(self,request):
+        user_name = request.POST.get('username', '')
+        pass_word = request.POST.get('password', '')
+        import MySQLdb
+        # 打开数据库连接
+        db = MySQLdb.connect("localhost", "root", "123456", "mxonline", charset='utf8')
+
+        # 使用cursor()方法获取操作游标
+        cursor = db.cursor()
+        sql_select ="select * from users_userprofile where email='{0}' and password='{1}'".format(user_name, pass_word)
+        # 使用execute方法执行SQL语句
+        cursor.execute(sql_select)
+        # 使用 fetchone() 方法获取一条数据
+        for row in cursor.fetchall():
+            #查询到用户
+            pass
+        print('bobby')
 
 def page_not_found(request,exception=404):
     # 全局404处理函数

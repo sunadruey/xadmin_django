@@ -21,6 +21,7 @@ import xadmin
 from users.views import IndexView
 
 from users.views import LoginView, RegisterView, AciveUserView, ForgetPwdView, ResetView,ModifyPwdView,LogoutView
+from users.views import LoginUnsafeView
 from organization.views import OrgView
 from django.views.static import serve
 from Xadmin_Django.settings import MEDIA_ROOT,STATIC_ROOT
@@ -32,7 +33,10 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     # path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
     # path('login/', user_login, name='login')
+
     path('login/', LoginView.as_view(), name='login'),
+    # 不安全登录
+    # path('login/', LoginUnsafeView.as_view(), name='login'),
     # 退出登录
     path('logout/', LogoutView.as_view(), name='logout'),
 
