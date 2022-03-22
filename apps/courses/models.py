@@ -47,6 +47,12 @@ class Course(models.Model):
         return self.name
 
 
+class BannerCourse(Course):
+    class Meta:
+        verbose_name = u"轮播课程"
+        verbose_name_plural = verbose_name
+        proxy = True
+
 class Lesson(models.Model):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=u'课程')

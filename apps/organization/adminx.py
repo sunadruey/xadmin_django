@@ -4,7 +4,11 @@
 # @File : adminx
 
 import xadmin
+
+
 from organization.models import CityDict, CourseOrg, Teacher
+
+
 
 
 class CityDictAdmin(object):
