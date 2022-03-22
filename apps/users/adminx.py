@@ -29,6 +29,7 @@ class EmailVerifyRecordAdmin(object):
     list_display = ['code', 'email', 'send_type', 'send_time']
     search_fields = ['code', 'email', 'send_type']
     list_filter = ['code', 'email', 'send_type', 'send_time']
+    # font-awesome的替换 https://fontawesome.com/
     model_icon = 'fa fa-address-book-o'
 
 

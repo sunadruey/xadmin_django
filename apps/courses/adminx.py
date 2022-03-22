@@ -11,6 +11,8 @@ class CourseAdmin(object):
     list_display = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time']
     search_fields = ['name', 'desc', 'detail', 'degree', 'students', 'fav_nums', 'click_num']
     list_filter = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time']
+    # 进入列表，点击次数倒叙排列，
+    ordering = ['-click_num']
 
 
 class LessonAdmin(object):
