@@ -31,7 +31,7 @@ AUTHENTICATION_BACKENDS = (
 SECRET_KEY = 'django-insecure-wn9jfcraa9q9=1vxn^gw$k_yq!p^ijjsg=x#h=z+neui1v-6y0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -174,4 +174,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # 配置static访问路径
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+# STATIC_ROOT = os.path.join(BASE_DIR, '/static')

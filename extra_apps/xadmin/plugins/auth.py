@@ -13,14 +13,13 @@ from django.utils.encoding import smart_text
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.forms import ModelMultipleChoiceField
-from django.contrib.auth import get_user_model
 from xadmin.layout import Fieldset, Main, Side, Row, FormHelper
 from xadmin.sites import site
 from xadmin.util import unquote
 from xadmin.views import BaseAdminPlugin, ModelFormAdminView, ModelAdminView, CommAdminView, csrf_protect_m
-
+# 替换它中的site.register(User, UserAdmin)的User
+from django.contrib.auth import get_user_model
 User = get_user_model()
-
 ACTION_NAME = {
     'add': _('Can add %s'),
     'change': _('Can change %s'),
