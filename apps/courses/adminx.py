@@ -13,6 +13,13 @@ class CourseAdmin(object):
     list_filter = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time']
     # 进入列表，点击次数倒叙排列，
     ordering = ['-click_num']
+    # 设置字段只读
+    readonly_fields = ['click_num']
+    # 默认隐藏字段和readonly_fields冲突 字段不能一样
+    exclude = ['fav_nums']
+
+
+
 
 
 class LessonAdmin(object):
