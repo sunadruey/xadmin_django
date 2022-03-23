@@ -18,7 +18,7 @@ class CourseResourceInline(object):
 
 class CourseAdmin(object):
 
-    list_display = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time']
+    list_display = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time','get_zj_nums','go_to']
     search_fields = ['name', 'desc', 'detail', 'degree', 'students', 'fav_nums', 'click_num']
     list_filter = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time']
     # 进入列表，点击次数倒叙排列，
@@ -28,6 +28,10 @@ class CourseAdmin(object):
     # 默认隐藏字段和readonly_fields冲突 字段不能一样
     exclude = ['fav_nums']
     inlines = [LessonInline, CourseResourceInline]
+    # 在列表页可直接修改
+    list_editable = ['degree','desc']
+    # 设置页面定时刷新
+    refresh_times = [3,5]
 
     def queryset(self):
         qs = super(CourseAdmin, self).queryset()
@@ -51,6 +55,7 @@ class BannerCourseAdmin(object):
         qs = super(BannerCourseAdmin, self).queryset()
         qs = qs.filter(is_banner=True)
         return qs
+
 
 class LessonAdmin(object):
     list_display = ['course', 'name', 'add_time']
