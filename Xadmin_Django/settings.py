@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'django.contrib.sites',
-    'xadmin',
     'crispy_forms',
     'reversion',
     'users',
@@ -55,6 +54,8 @@ INSTALLED_APPS = [
     "operation",
     "captcha",
     "pure_pagination",
+    'xadmin',
+    "DjangoUeditor"
 
 
 ]

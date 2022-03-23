@@ -67,7 +67,8 @@ urlpatterns = [
     re_path('media/(?P<path>.*)/$', serve, {"document_root": MEDIA_ROOT}),
     # DEBUG = False时不会访问静态数据，需要手动添加
     # re_path('static/(?P<path>.*)/$', serve, {"document_root": STATIC_ROOT}),
-
+    # 富文本相关url
+    path('ueditor/', include('DjangoUeditor.urls')),
 
 ]
 # 全局404页面配置

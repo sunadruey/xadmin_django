@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from organization.models import CourseOrg,Teacher
-# from DjangoUeditor.models import UEditorField
+from DjangoUeditor.models import UEditorField
 
 
 # Create your models here.
@@ -14,7 +14,9 @@ class Course(models.Model):
     desc = models.CharField(max_length=300, verbose_name=u"课程描述")
     youneed_know = models.CharField(max_length=300,default="", blank=True, null=True, verbose_name=u"课程须知")
     teacher_tell= models.CharField(max_length=300, default="", blank=True, null=True, verbose_name=u"教师告知")
-    detail = models.TextField(verbose_name=u'课程详情')
+    # 课程描述变成富文本
+    # detail = models.TextField(verbose_name=u'课程详情')
+    detail = UEditorField(verbose_name=u'课程详情',width=600, height=300,  imagePath="courses/ueditor/", filePath="courses/ueditor/", default='')
     is_banner = models.BooleanField(default=False, verbose_name=u'是否轮播图')
     degree = models.CharField(choices=(('cj', '初级'), ('zj', "中级"), ('gj', '高级')), verbose_name=u'难度', max_length=2)
     theacher = models.ForeignKey(Teacher,on_delete=models.CASCADE, verbose_name=u'讲师', blank=True, null=True)

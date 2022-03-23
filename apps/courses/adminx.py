@@ -33,6 +33,8 @@ class CourseAdmin(object):
     list_editable = ['degree','desc']
     # 设置页面定时刷新
     refresh_times = [3,5]
+    style_fields ={'detail':'ueditor'}
+    import_excel = True
 
     def queryset(self):
         qs = super(CourseAdmin, self).queryset()
@@ -48,7 +50,10 @@ class CourseAdmin(object):
             course_org.course_nums = Course.objects.filter(course_org=course_org).count()
             course_org.save()
 
-
+    def post(self,request, *args, **kwargs):
+        if 'excel' in request.FILES:
+            pass
+        return super(CourseAdmin, self).post(request,args,kwargs)
 
 class BannerCourseAdmin(object):
     list_display = ['name', 'desc', 'detail', 'degree', 'learn_time', 'students', 'fav_nums', 'click_num', 'add_time']
