@@ -4,6 +4,7 @@
 # @File : adminx
 import xadmin
 from .models import Course,CourseResourse,Video,Lesson,BannerCourse
+from organization.models import CourseOrg
 
 
 class LessonInline(object):
@@ -37,6 +38,16 @@ class CourseAdmin(object):
         qs = super(CourseAdmin, self).queryset()
         qs = qs.filter(is_banner=False)
         return qs
+
+    def save_models(self):
+        # 在保存课程的时候统计课程机构的课程数
+        obj = self.new_obj
+        obj.save()
+        if obj.course_org is not None:
+            course_org = obj.course_org
+            course_org.course_nums = Course.objects.filter(course_org=course_org).count()
+            course_org.save()
+
 
 
 class BannerCourseAdmin(object):
